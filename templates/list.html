@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container">
+    <div class="card">
+        <div class="card-header">
+            Movies
+            <div class="btn-group float-right">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ url_for('form') }}">Write</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <div class="card">
+            <div class="card-body">
+                <table class="table table-dark">
+                    <tr>
+                        <th>Movie Title</th>
+                        <th>Release Year</th>
+                        <th>Rating</th>
+                        <th>View Count</th>
+                    </tr>
+                    {% for movie in posts %}
+                    <tr>
+                        <td><a href="{{ url_for('detail', uid=movie.uid)}}">{{movie.title}}</a></td>
+                        <td>{{movie.year}}</td>
+                        <td>{{movie.rating}}</td>
+                        <td>{{movie.count}}</td>
+                        <td>
+                            <div class="btn-group show">
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bars"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ url_for('form', uid=movie.uid) }}">Update</a>
+                                    <a class="dropdown-item" href="{{ url_for('delete', uid=movie.uid)}}">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    </div>
+</section>
+{% endblock content %}

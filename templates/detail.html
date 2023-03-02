@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="container">
+    <div class="card">
+        <div class="card-header">
+            {{ post.title}}
+            <a class="btn btn-sm, btn-primary float-right" href="{{url_for('list')}}">Go Back to List</a>
+        </div>
+
+        <div class="card-body">
+            {{post.description}}
+        </div>
+    </div>
+</section>
+{% endblock content %}
