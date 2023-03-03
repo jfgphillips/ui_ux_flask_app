@@ -1,20 +1,13 @@
-ARG APP_IMAGE=python:3.10.10-slim-buster
+FROM python:3.10.10-slim-buster
 
-FROM $APP_IMAGE AS base
+WORKDIR /app
 
-FROM base as builder
+COPY requirements.txt /install/requirements.txt
 
-RUN mkdir /install
-WORKDIR /install
+COPY requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
 
-COPY requirements.txt /requirements.txt
+# Copy our code from the current folder to /app inside the container
+COPY . .
 
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
-
-FROM base
-ENV FLASK_APP routes.py
-WORKDIR /project
-COPY --from=builder /install /usr/local
-ADD . /project
-
-ENTRYPOINT ["python", "-m", "flask", "run", "--host=0.0.0.0"]
+CMD ["python", "app.py"]
